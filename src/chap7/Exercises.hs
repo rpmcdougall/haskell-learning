@@ -14,8 +14,21 @@ all' p = and . map p
 any' p = or . map p
 
 
-takeWhile :: (a -> Bool)  -> [a] -> [a]
-takeWhile p xs = [ x | x <- filter p xs]
+takeWhile' :: (a -> Bool)  -> [a] -> [a]
+takewhile' _ [] = []
+takeWhile' p (x:xs) | p x = x : takeWhile' p xs
+                    | otherwise = []
+                   
+dropWhile' :: (a -> Bool) -> [a] -> [a]
+dropwhile' _ [] = []
+dropWhile' p (x:xs) | p x =  x : dropWhile' p xs
+                    | otherwise = x : xs
 
-dropWhile :: (a -> Bool) -> [a] -> [a]
-dropWhile p xs = [x | x <- filter (not . p) xs]
+
+-- redefine map f and filter p using foldr
+map' f  = foldr (\x xs -> f x:xs) []
+filter p = foldr(\x xs -> if p x then x:xs else xs) []
+
+
+
+
